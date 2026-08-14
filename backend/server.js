@@ -14,6 +14,11 @@ app.get('/', (req, res) => {
   res.send('ProdOps API is running...');
 });
 
+
+const authRoutes = require('./routes/authRoutes');
+app.use('/api/auth', authRoutes);
+
+
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected successfully'))
