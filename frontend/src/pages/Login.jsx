@@ -120,3 +120,5 @@ const styles = {
     color: '#555'
   }
 };
+
+export default Login;
