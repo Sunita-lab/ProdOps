@@ -26,6 +26,10 @@ app.use('/api/orders', productionOrderRoutes);
 
 const downtimeRoutes = require('./routes/downtimeRoutes');
 app.use('/api/downtimes', downtimeRoutes);
+
+const qualityInspectionRoutes = require('./routes/qualityInspectionRoutes');
+app.use('/api/quality', qualityInspectionRoutes);
+
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected successfully'))
