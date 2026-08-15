@@ -12,6 +12,7 @@ function Layout({ children }) {
     { path: '/lines', label: 'Lines' },
     { path: '/shifts', label: 'Shifts' },
     { path: '/orders', label: 'Production Orders' },
+    { path: '/entry', label: 'Production Entry' },
   ];
 
   const handleLogout = () => {
