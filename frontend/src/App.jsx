@@ -7,6 +7,7 @@ import Products from './pages/Products';
 import Machines from './pages/Machines';
 import Lines from './pages/Lines';
 import Shifts from './pages/Shifts';
+import ProductionOrders from './pages/ProductionOrders';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
       <Route path="/machines" element={<PrivateRoute><Machines /></PrivateRoute>} />
       <Route path="/lines" element={<PrivateRoute><Lines /></PrivateRoute>} />
       <Route path="/shifts" element={<PrivateRoute><Shifts /></PrivateRoute>} />
+      <Route path="/orders" element={<PrivateRoute><ProductionOrders /></PrivateRoute>} />
     </Routes>
   );
 }

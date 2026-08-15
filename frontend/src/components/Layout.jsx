@@ -11,6 +11,7 @@ function Layout({ children }) {
     { path: '/machines', label: 'Machines' },
     { path: '/lines', label: 'Lines' },
     { path: '/shifts', label: 'Shifts' },
+    { path: '/orders', label: 'Production Orders' },
   ];
 
   const handleLogout = () => {
