@@ -4,24 +4,17 @@ import Layout from '../components/Layout';
 
 function Dashboard() {
   const user = JSON.parse(localStorage.getItem('user'));
-  const [counts, setCounts] = useState({ products: 0, machines: 0, lines: 0, shifts: 0 });
+  const [summary, setSummary] = useState(null);
   const [machines, setMachines] = useState([]);
   const [error, setError] = useState('');
 
-  const fetchSummary = async () => {
+  const fetchData = async () => {
     try {
-      const [productsRes, machinesRes, linesRes, shiftsRes] = await Promise.all([
-        API.get('/products'),
+      const [summaryRes, machinesRes] = await Promise.all([
+        API.get('/dashboard/summary'),
         API.get('/machines'),
-        API.get('/lines'),
-        API.get('/shifts'),
       ]);
-      setCounts({
-        products: productsRes.data.length,
-        machines: machinesRes.data.length,
-        lines: linesRes.data.length,
-        shifts: shiftsRes.data.length,
-      });
+      setSummary(summaryRes.data);
       setMachines(machinesRes.data);
     } catch (err) {
       setError('Failed to load dashboard data');
@@ -29,7 +22,7 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    fetchSummary();
+    fetchData();
   }, []);
 
   const statusColor = (status) => {
@@ -38,11 +31,21 @@ function Dashboard() {
     return 'var(--color-idle)';
   };
 
+  if (!summary) {
+    return (
+      <Layout>
+        <div style={styles.container}>
+          {error ? <p style={{ color: 'var(--color-down)' }}>{error}</p> : <p style={styles.loading}>Loading dashboard...</p>}
+        </div>
+      </Layout>
+    );
+  }
+
   const cards = [
-    { label: 'Products', value: counts.products },
-    { label: 'Machines', value: counts.machines },
-    { label: 'Lines', value: counts.lines },
-    { label: 'Shifts', value: counts.shifts },
+    { label: "Today's Output", value: summary.todayOutput, unit: 'units', highlight: true },
+    { label: 'Active Orders', value: summary.activeOrders, unit: `of ${summary.totalOrders}` },
+    { label: 'Machines Running', value: summary.totalMachines - summary.machinesDown, unit: `of ${summary.totalMachines}` },
+    { label: 'Rejection Rate', value: `${summary.rejectionRate}%`, unit: 'all-time', warn: summary.rejectionRate > 5 },
   ];
 
   return (
@@ -53,16 +56,26 @@ function Dashboard() {
           <p style={styles.subheading}>Here's what's happening on the floor today</p>
         </div>
 
-        {error && <p style={{ color: 'var(--color-down)', fontSize: '13px', marginBottom: '12px' }}>{error}</p>}
-
         <div style={styles.cardGrid}>
           {cards.map((c) => (
             <div key={c.label} style={styles.statCard}>
-              <div style={styles.statValue}>{c.value}</div>
+              <div style={{
+                ...styles.statValue,
+                color: c.warn ? 'var(--color-down)' : c.highlight ? 'var(--color-primary)' : 'var(--color-text)'
+              }}>
+                {c.value}
+              </div>
               <div style={styles.statLabel}>{c.label}</div>
+              <div style={styles.statUnit}>{c.unit}</div>
             </div>
           ))}
         </div>
+
+        {summary.activeDowntimes > 0 && (
+          <div style={styles.alertBanner}>
+            ⚠ {summary.activeDowntimes} machine{summary.activeDowntimes > 1 ? 's are' : ' is'} currently down — check the Downtime page
+          </div>
+        )}
 
         <div style={styles.card}>
           <h3 style={styles.sectionHeading}>Machine Status</h3>
@@ -91,6 +104,7 @@ function Dashboard() {
 
 const styles = {
   container: { padding: '32px 40px', maxWidth: '1000px' },
+  loading: { fontSize: '14px', color: '#888' },
   headerRow: { marginBottom: '24px' },
   heading: { fontFamily: 'var(--font-heading)', fontSize: '22px', fontWeight: 500, marginBottom: '4px' },
   subheading: { fontFamily: 'var(--font-body)', fontSize: '13px', color: '#777' },
@@ -98,7 +112,7 @@ const styles = {
     display: 'grid',
     gridTemplateColumns: 'repeat(4, 1fr)',
     gap: '14px',
-    marginBottom: '24px'
+    marginBottom: '20px'
   },
   statCard: {
     background: 'white',
@@ -109,17 +123,30 @@ const styles = {
   },
   statValue: {
     fontFamily: 'var(--font-mono)',
-    fontSize: '28px',
-    fontWeight: 500,
-    color: 'var(--color-primary)'
+    fontSize: '26px',
+    fontWeight: 500
   },
   statLabel: {
     fontFamily: 'var(--font-body)',
     fontSize: '12px',
-    color: '#888',
-    textTransform: 'uppercase',
-    letterSpacing: '0.3px',
-    marginTop: '4px'
+    color: '#555',
+    marginTop: '6px',
+    fontWeight: 500
+  },
+  statUnit: {
+    fontFamily: 'var(--font-body)',
+    fontSize: '11px',
+    color: '#999',
+    marginTop: '2px'
+  },
+  alertBanner: {
+    background: '#FBEDEA',
+    border: '1px solid var(--color-down)',
+    color: '#8A2E2E',
+    borderRadius: '8px',
+    padding: '12px 16px',
+    fontSize: '13px',
+    marginBottom: '20px'
   },
   card: {
     background: 'white',
