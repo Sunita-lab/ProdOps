@@ -8,6 +8,12 @@ function Landing() {
     { n: '04', title: 'Quality Tracking', desc: 'Record pass/fail inspections and monitor rejection rates across orders.' },
   ];
 
+  const steps = [
+    { n: '1', title: 'Set up your floor', desc: 'Add products, machines, lines, and shifts once — the building blocks every order and entry will reference.' },
+    { n: '2', title: 'Plan and run orders', desc: 'Create production orders against a product, machine, and shift. Operators log output as it happens.' },
+    { n: '3', title: 'See it all live', desc: 'Downtime, quality, and output roll up into one dashboard — no end-of-shift spreadsheet needed.' },
+  ];
+
   return (
     <div style={styles.page}>
       <div style={styles.bgGrid} />
@@ -79,6 +85,10 @@ function Landing() {
       </section>
 
       <section style={styles.featuresSection}>
+        <div style={styles.sectionHead}>
+          <div style={styles.eyebrow}>WHAT YOU GET</div>
+          <h2 style={styles.sectionTitle}>Everything the floor needs, nothing it doesn't</h2>
+        </div>
         <div style={styles.features}>
           {features.map((f) => (
             <div key={f.title} style={styles.featureCard}>
@@ -87,6 +97,33 @@ function Landing() {
               <div style={styles.featureDesc}>{f.desc}</div>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section style={styles.stepsSection}>
+        <div style={styles.sectionHead}>
+          <div style={styles.eyebrow}>HOW IT WORKS</div>
+          <h2 style={styles.sectionTitle}>From setup to shift-end, in three steps</h2>
+        </div>
+        <div style={styles.stepsRow}>
+          {steps.map((s, i) => (
+            <div key={s.n} style={styles.stepItem}>
+              <div style={styles.stepNumCircle}>{s.n}</div>
+              <div style={styles.stepTitle}>{s.title}</div>
+              <div style={styles.stepDesc}>{s.desc}</div>
+              {i < steps.length - 1 && <div style={styles.stepConnector} />}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section style={styles.ctaSection}>
+        <div style={styles.ctaBanner}>
+          <div>
+            <div style={styles.ctaTitle}>Ready to see your floor in real time?</div>
+            <div style={styles.ctaSubtitle}>Set up your first product and machine in under five minutes.</div>
+          </div>
+          <Link to="/register" style={styles.ctaBtn}>Get started free</Link>
         </div>
       </section>
 
@@ -125,7 +162,7 @@ const styles = {
     background: 'var(--color-primary)', padding: '8px 16px', borderRadius: '6px'
   },
   hero: {
-    maxWidth: '1080px', margin: '64px auto 100px', padding: '0 48px',
+    maxWidth: '1080px', margin: '64px auto 120px', padding: '0 48px',
     display: 'flex', alignItems: 'center', gap: '48px', flexWrap: 'wrap', position: 'relative', zIndex: 1
   },
   heroLeft: { flex: '1 1 420px', minWidth: '320px' },
@@ -172,7 +209,14 @@ const styles = {
   },
   mockRowName: { fontFamily: 'var(--font-body)', color: 'var(--color-text)' },
   mockStatusPill: { fontFamily: 'var(--font-body)', fontWeight: 500, fontSize: '12px' },
-  featuresSection: { padding: '0 48px 100px', position: 'relative', zIndex: 1 },
+
+  sectionHead: { textAlign: 'center', maxWidth: '520px', margin: '0 auto 40px' },
+  sectionTitle: {
+    fontFamily: 'var(--font-heading)', fontSize: '26px', fontWeight: 500,
+    color: 'var(--color-text)', lineHeight: 1.3
+  },
+
+  featuresSection: { padding: '0 48px 110px', position: 'relative', zIndex: 1 },
   features: {
     maxWidth: '1080px', margin: '0 auto',
     display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px'
@@ -191,9 +235,52 @@ const styles = {
   featureDesc: {
     fontFamily: 'var(--font-body)', fontSize: '13px', color: '#777', lineHeight: 1.5
   },
+
+  stepsSection: {
+    padding: '90px 48px 110px', position: 'relative', zIndex: 1,
+    background: 'white', borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)'
+  },
+  stepsRow: {
+    maxWidth: '900px', margin: '0 auto', display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px'
+  },
+  stepItem: { position: 'relative', textAlign: 'left' },
+  stepNumCircle: {
+    width: '34px', height: '34px', borderRadius: '50%', background: 'var(--color-chrome)',
+    color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center',
+    fontFamily: 'var(--font-mono)', fontSize: '14px', marginBottom: '16px'
+  },
+  stepTitle: {
+    fontFamily: 'var(--font-heading)', fontSize: '16px', fontWeight: 500,
+    color: 'var(--color-text)', marginBottom: '8px'
+  },
+  stepDesc: {
+    fontFamily: 'var(--font-body)', fontSize: '13.5px', color: '#777', lineHeight: 1.6
+  },
+  stepConnector: {
+    display: 'none'
+  },
+
+  ctaSection: { padding: '90px 48px', position: 'relative', zIndex: 1 },
+  ctaBanner: {
+    maxWidth: '1000px', margin: '0 auto', background: 'var(--color-chrome)', borderRadius: '14px',
+    padding: '40px 48px', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+    flexWrap: 'wrap', gap: '20px'
+  },
+  ctaTitle: {
+    fontFamily: 'var(--font-heading)', fontSize: '22px', fontWeight: 500, color: 'white', marginBottom: '6px'
+  },
+  ctaSubtitle: {
+    fontFamily: 'var(--font-body)', fontSize: '14px', color: '#B8BFC4'
+  },
+  ctaBtn: {
+    fontFamily: 'var(--font-heading)', fontSize: '14px', fontWeight: 500, color: 'var(--color-chrome)',
+    textDecoration: 'none', background: 'white', padding: '13px 26px', borderRadius: '6px', whiteSpace: 'nowrap'
+  },
+
   footer: {
     textAlign: 'center', padding: '24px', fontFamily: 'var(--font-body)',
-    fontSize: '12px', color: '#999', borderTop: '1px solid var(--color-border)', position: 'relative', zIndex: 1
+    fontSize: '12px', color: '#999', position: 'relative', zIndex: 1
   }
 };
 
