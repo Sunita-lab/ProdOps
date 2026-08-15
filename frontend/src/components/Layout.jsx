@@ -13,6 +13,8 @@ function Layout({ children }) {
     { path: '/shifts', label: 'Shifts' },
     { path: '/orders', label: 'Production Orders' },
     { path: '/entry', label: 'Production Entry' },
+    { path: '/downtime', label: 'Downtime' },
+    { path: '/quality', label: 'Quality' },
   ];
 
   const handleLogout = () => {
