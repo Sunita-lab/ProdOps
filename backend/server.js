@@ -18,6 +18,8 @@ app.get('/', (req, res) => {
 const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
+const productRoutes = require('./routes/productRoutes');
+app.use('/api/products', productRoutes);
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
