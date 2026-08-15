@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
+import Products from './pages/Products';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           </PrivateRoute>
         }
       />
+      <Route path="/products" element={<PrivateRoute><Products /></PrivateRoute>} />
     </Routes>
   );
 }
