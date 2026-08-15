@@ -4,6 +4,9 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 import Products from './pages/Products';
+import Machines from './pages/Machines';
+import Lines from './pages/Lines';
+import Shifts from './pages/Shifts';
 
 function App() {
   return (
@@ -20,6 +23,9 @@ function App() {
         }
       />
       <Route path="/products" element={<PrivateRoute><Products /></PrivateRoute>} />
+      <Route path="/machines" element={<PrivateRoute><Machines /></PrivateRoute>} />
+      <Route path="/lines" element={<PrivateRoute><Lines /></PrivateRoute>} />
+      <Route path="/shifts" element={<PrivateRoute><Shifts /></PrivateRoute>} />
     </Routes>
   );
 }
