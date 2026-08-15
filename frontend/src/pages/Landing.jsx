@@ -2,16 +2,21 @@ import { Link } from 'react-router-dom';
 
 function Landing() {
   const features = [
-    { title: 'Live Machine Status', desc: 'Track running, idle, and down machines across every line in real time.' },
-    { title: 'Production Orders', desc: 'Plan orders against products, machines, and shifts — track progress automatically.' },
-    { title: 'Downtime Logging', desc: 'Capture breakdowns and stoppages with categorized reasons for root-cause analysis.' },
-    { title: 'Quality Tracking', desc: 'Record pass/fail inspections and monitor rejection rates across orders.' },
+    { n: '01', title: 'Live Machine Status', desc: 'Track running, idle, and down machines across every line in real time.' },
+    { n: '02', title: 'Production Orders', desc: 'Plan orders against products, machines, and shifts — track progress automatically.' },
+    { n: '03', title: 'Downtime Logging', desc: 'Capture breakdowns and stoppages with categorized reasons for root-cause analysis.' },
+    { n: '04', title: 'Quality Tracking', desc: 'Record pass/fail inspections and monitor rejection rates across orders.' },
   ];
 
   return (
     <div style={styles.page}>
+      <div style={styles.bgGrid} />
+
       <header style={styles.header}>
-        <div style={styles.logo}>ProdOps</div>
+        <div style={styles.logo}>
+          <span style={styles.logoDot} />
+          ProdOps
+        </div>
         <div style={styles.headerLinks}>
           <Link to="/login" style={styles.headerLink}>Sign in</Link>
           <Link to="/register" style={styles.headerCta}>Get started</Link>
@@ -19,24 +24,70 @@ function Landing() {
       </header>
 
       <section style={styles.hero}>
-        <h1 style={styles.heroTitle}>Production monitoring,<br />built for the factory floor.</h1>
-        <p style={styles.heroSubtitle}>
-          Track machines, orders, downtime, and quality in one place —
-          from shift start to shipped output.
-        </p>
-        <div style={styles.heroButtons}>
-          <Link to="/register" style={styles.primaryBtn}>Get started</Link>
-          <Link to="/login" style={styles.secondaryBtn}>Sign in</Link>
+        <div style={styles.heroLeft}>
+          <div style={styles.eyebrow}>PRODUCTION MONITORING</div>
+          <h1 style={styles.heroTitle}>Know what's happening<br />on the floor, right now.</h1>
+          <p style={styles.heroSubtitle}>
+            Machines, orders, downtime, and quality — tracked in one place,
+            from shift start to shipped output.
+          </p>
+          <div style={styles.heroButtons}>
+            <Link to="/register" style={styles.primaryBtn}>Get started</Link>
+            <Link to="/login" style={styles.secondaryBtn}>Sign in</Link>
+          </div>
+        </div>
+
+        <div style={styles.heroRight}>
+          <div style={styles.mockWindow}>
+            <div style={styles.mockTopBar}>
+              <span style={{ ...styles.mockDot, background: '#E5544D' }} />
+              <span style={{ ...styles.mockDot, background: '#E8B339' }} />
+              <span style={{ ...styles.mockDot, background: '#3FAE5C' }} />
+            </div>
+            <div style={styles.mockBody}>
+              <div style={styles.mockStatRow}>
+                <div style={styles.mockStatCard}>
+                  <div style={styles.mockStatValue}>1,284</div>
+                  <div style={styles.mockStatLabel}>Today's Output</div>
+                </div>
+                <div style={styles.mockStatCard}>
+                  <div style={{ ...styles.mockStatValue, fontSize: '18px' }}>6 / 8</div>
+                  <div style={styles.mockStatLabel}>Active Orders</div>
+                </div>
+              </div>
+              <div style={styles.mockListCard}>
+                {[
+                  { name: 'Line 1 — Filler', status: 'running' },
+                  { name: 'Line 2 — Bottler', status: 'running' },
+                  { name: 'Line 3 — Packer', status: 'idle' },
+                  { name: 'Line 4 — Sealer', status: 'down' },
+                ].map((m) => (
+                  <div key={m.name} style={styles.mockRow}>
+                    <span style={styles.mockRowName}>{m.name}</span>
+                    <span style={{
+                      ...styles.mockStatusPill,
+                      color: m.status === 'running' ? '#2E7D46' : m.status === 'down' ? '#C43D3D' : '#C77A1F'
+                    }}>
+                      ● {m.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section style={styles.features}>
-        {features.map((f) => (
-          <div key={f.title} style={styles.featureCard}>
-            <div style={styles.featureTitle}>{f.title}</div>
-            <div style={styles.featureDesc}>{f.desc}</div>
-          </div>
-        ))}
+      <section style={styles.featuresSection}>
+        <div style={styles.features}>
+          {features.map((f) => (
+            <div key={f.title} style={styles.featureCard}>
+              <div style={styles.featureNum}>{f.n}</div>
+              <div style={styles.featureTitle}>{f.title}</div>
+              <div style={styles.featureDesc}>{f.desc}</div>
+            </div>
+          ))}
+        </div>
       </section>
 
       <footer style={styles.footer}>
@@ -47,12 +98,26 @@ function Landing() {
 }
 
 const styles = {
-  page: { minHeight: '100vh', background: 'var(--color-bg)' },
+  page: { minHeight: '100vh', background: 'var(--color-bg)', position: 'relative', overflow: 'hidden' },
+  bgGrid: {
+    position: 'absolute', top: 0, left: 0, right: 0, height: '520px',
+    backgroundImage: 'linear-gradient(rgba(11,95,165,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(11,95,165,0.05) 1px, transparent 1px)',
+    backgroundSize: '40px 40px',
+    maskImage: 'linear-gradient(to bottom, black, transparent)',
+    WebkitMaskImage: 'linear-gradient(to bottom, black, transparent)',
+    pointerEvents: 'none'
+  },
   header: {
     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-    padding: '20px 48px'
+    padding: '22px 48px', position: 'relative', zIndex: 1
   },
-  logo: { fontFamily: 'var(--font-heading)', fontSize: '18px', fontWeight: 500, color: 'var(--color-text)' },
+  logo: {
+    fontFamily: 'var(--font-heading)', fontSize: '18px', fontWeight: 500, color: 'var(--color-text)',
+    display: 'flex', alignItems: 'center', gap: '8px'
+  },
+  logoDot: {
+    width: '8px', height: '8px', borderRadius: '2px', background: 'var(--color-primary)', display: 'inline-block'
+  },
   headerLinks: { display: 'flex', alignItems: 'center', gap: '20px' },
   headerLink: { fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--color-text)', textDecoration: 'none' },
   headerCta: {
@@ -60,17 +125,23 @@ const styles = {
     background: 'var(--color-primary)', padding: '8px 16px', borderRadius: '6px'
   },
   hero: {
-    maxWidth: '640px', margin: '80px auto 100px', textAlign: 'center', padding: '0 24px'
+    maxWidth: '1080px', margin: '64px auto 100px', padding: '0 48px',
+    display: 'flex', alignItems: 'center', gap: '48px', flexWrap: 'wrap', position: 'relative', zIndex: 1
+  },
+  heroLeft: { flex: '1 1 420px', minWidth: '320px' },
+  eyebrow: {
+    fontFamily: 'var(--font-mono)', fontSize: '12px', fontWeight: 500, letterSpacing: '1.5px',
+    color: 'var(--color-primary)', marginBottom: '16px'
   },
   heroTitle: {
-    fontFamily: 'var(--font-heading)', fontSize: '38px', fontWeight: 500,
-    lineHeight: 1.25, color: 'var(--color-text)', marginBottom: '16px'
+    fontFamily: 'var(--font-heading)', fontSize: '42px', fontWeight: 500,
+    lineHeight: 1.2, color: 'var(--color-text)', marginBottom: '18px'
   },
   heroSubtitle: {
     fontFamily: 'var(--font-body)', fontSize: '16px', color: '#666',
-    lineHeight: 1.6, marginBottom: '32px'
+    lineHeight: 1.6, marginBottom: '32px', maxWidth: '440px'
   },
-  heroButtons: { display: 'flex', gap: '12px', justifyContent: 'center' },
+  heroButtons: { display: 'flex', gap: '12px' },
   primaryBtn: {
     fontFamily: 'var(--font-heading)', fontSize: '14px', fontWeight: 500, color: 'white',
     textDecoration: 'none', background: 'var(--color-primary)', padding: '12px 24px', borderRadius: '6px'
@@ -80,13 +151,38 @@ const styles = {
     textDecoration: 'none', background: 'white', border: '1px solid var(--color-border)',
     padding: '12px 24px', borderRadius: '6px'
   },
+  heroRight: { flex: '1 1 380px', minWidth: '320px' },
+  mockWindow: {
+    background: 'white', borderRadius: '12px', border: '1px solid var(--color-border)',
+    boxShadow: '0 20px 40px -12px rgba(28,31,34,0.18)', overflow: 'hidden'
+  },
+  mockTopBar: { display: 'flex', gap: '6px', padding: '12px 14px', background: '#F5F6F4', borderBottom: '1px solid var(--color-border)' },
+  mockDot: { width: '9px', height: '9px', borderRadius: '50%', display: 'inline-block' },
+  mockBody: { padding: '18px' },
+  mockStatRow: { display: 'flex', gap: '10px', marginBottom: '14px' },
+  mockStatCard: {
+    flex: 1, background: '#F9FAF8', border: '1px solid var(--color-border)', borderRadius: '8px', padding: '12px 14px'
+  },
+  mockStatValue: { fontFamily: 'var(--font-mono)', fontSize: '22px', fontWeight: 500, color: 'var(--color-primary)' },
+  mockStatLabel: { fontFamily: 'var(--font-body)', fontSize: '11px', color: '#888', marginTop: '2px' },
+  mockListCard: { border: '1px solid var(--color-border)', borderRadius: '8px', overflow: 'hidden' },
+  mockRow: {
+    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+    padding: '10px 14px', borderBottom: '1px solid #F0F0EE', fontSize: '13px'
+  },
+  mockRowName: { fontFamily: 'var(--font-body)', color: 'var(--color-text)' },
+  mockStatusPill: { fontFamily: 'var(--font-body)', fontWeight: 500, fontSize: '12px' },
+  featuresSection: { padding: '0 48px 100px', position: 'relative', zIndex: 1 },
   features: {
-    maxWidth: '1000px', margin: '0 auto', padding: '0 24px 100px',
+    maxWidth: '1080px', margin: '0 auto',
     display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px'
   },
   featureCard: {
     background: 'white', border: '0.5px solid var(--color-border)', borderRadius: '10px',
-    padding: '20px', boxShadow: '0 1px 2px rgba(0,0,0,0.04)'
+    padding: '22px 20px', boxShadow: '0 1px 2px rgba(0,0,0,0.04)'
+  },
+  featureNum: {
+    fontFamily: 'var(--font-mono)', fontSize: '12px', color: '#B8BCB5', marginBottom: '10px'
   },
   featureTitle: {
     fontFamily: 'var(--font-heading)', fontSize: '15px', fontWeight: 500,
@@ -97,7 +193,7 @@ const styles = {
   },
   footer: {
     textAlign: 'center', padding: '24px', fontFamily: 'var(--font-body)',
-    fontSize: '12px', color: '#999', borderTop: '1px solid var(--color-border)'
+    fontSize: '12px', color: '#999', borderTop: '1px solid var(--color-border)', position: 'relative', zIndex: 1
   }
 };
 
