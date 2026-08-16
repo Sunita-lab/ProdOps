@@ -27,3 +27,46 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
 }
+
+/* Responsive: Sidebar becomes a top bar on small screens */
+@media (max-width: 768px) {
+  .app-shell {
+    flex-direction: column !important;
+  }
+  .app-sidebar {
+    width: 100% !important;
+    height: auto !important;
+    position: relative !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    padding: 12px 16px !important;
+    overflow-x: auto !important;
+  }
+  .app-sidebar-nav {
+    flex-direction: row !important;
+    gap: 4px !important;
+  }
+  .app-sidebar-footer {
+    display: none !important;
+  }
+}
+
+/* Responsive: grids collapse on small screens */
+@media (max-width: 900px) {
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 560px) {
+  .grid-4 {
+    grid-template-columns: 1fr !important;
+  }
+  .grid-3 {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Responsive: tables scroll horizontally instead of squeezing */
+.table-scroll {
+  overflow-x: auto;
+}
