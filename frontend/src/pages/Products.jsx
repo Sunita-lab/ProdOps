@@ -47,7 +47,7 @@ function Products() {
 
   return (
     <Layout>
-      <div style={styles.container}>
+      <div style={styles.container} className="page-container">
         <div style={styles.headerRow}>
           <h2 style={styles.heading}>Products</h2>
           <p style={styles.subheading}>{products.length} products registered</p>
@@ -66,33 +66,35 @@ function Products() {
         {error && <p style={{ color: 'var(--color-down)', fontSize: '13px', marginBottom: '12px' }}>{error}</p>}
 
         <div style={styles.card}>
-          <table style={styles.table}>
-            <thead>
-              <tr>
-                <th style={styles.th}>Name</th>
-                <th style={styles.th}>Code</th>
-                <th style={styles.th}>Unit</th>
-                <th style={styles.th}>Cycle Time</th>
-                <th style={styles.th}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.map((p) => (
-                <tr key={p._id} style={styles.tr}>
-                  <td style={styles.td}>{p.name}</td>
-                  <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{p.code}</td>
-                  <td style={styles.td}>{p.unit}</td>
-                  <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{p.standardCycleTime}s</td>
-                  <td style={styles.td}>
-                    <button onClick={() => handleDelete(p._id)} style={styles.deleteBtn}>Delete</button>
-                  </td>
+          <div className="table-scroll">
+            <table style={{ ...styles.table, minWidth: '560px' }}>
+              <thead>
+                <tr>
+                  <th style={styles.th}>Name</th>
+                  <th style={styles.th}>Code</th>
+                  <th style={styles.th}>Unit</th>
+                  <th style={styles.th}>Cycle Time</th>
+                  <th style={styles.th}></th>
                 </tr>
-              ))}
-              {products.length === 0 && (
-                <tr><td colSpan="5" style={styles.emptyState}>No products yet — add your first one above</td></tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {products.map((p) => (
+                  <tr key={p._id} style={styles.tr}>
+                    <td style={styles.td}>{p.name}</td>
+                    <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{p.code}</td>
+                    <td style={styles.td}>{p.unit}</td>
+                    <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{p.standardCycleTime}s</td>
+                    <td style={styles.td}>
+                      <button onClick={() => handleDelete(p._id)} style={styles.deleteBtn}>Delete</button>
+                    </td>
+                  </tr>
+                ))}
+                {products.length === 0 && (
+                  <tr><td colSpan="5" style={styles.emptyState}>No products yet — add your first one above</td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </Layout>

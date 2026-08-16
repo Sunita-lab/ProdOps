@@ -49,7 +49,7 @@ function ProductionEntry() {
 
   return (
     <Layout>
-      <div style={styles.container}>
+      <div style={styles.container} className="page-container">
         <div style={styles.headerRow}>
           <h2 style={styles.heading}>Production Entry</h2>
           <p style={styles.subheading}>Log output against an active order</p>
@@ -78,37 +78,39 @@ function ProductionEntry() {
 
         <div style={styles.card}>
           <h3 style={styles.sectionHeading}>Recent Entries</h3>
-          <table style={styles.table}>
-            <thead>
-              <tr>
-                <th style={styles.th}>Order</th>
-                <th style={styles.th}>Product</th>
-                <th style={styles.th}>Produced</th>
-                <th style={styles.th}>Rejected</th>
-                <th style={styles.th}>By</th>
-                <th style={styles.th}>When</th>
-              </tr>
-            </thead>
-            <tbody>
-              {records.map((r) => (
-                <tr key={r._id}>
-                  <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{r.order?.orderNumber}</td>
-                  <td style={styles.td}>{r.order?.product?.name}</td>
-                  <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{r.quantityProduced}</td>
-                  <td style={{ ...styles.td, fontFamily: 'var(--font-mono)', color: r.rejectedQuantity > 0 ? 'var(--color-down)' : 'inherit' }}>
-                    {r.rejectedQuantity}
-                  </td>
-                  <td style={styles.td}>{r.recordedBy?.name}</td>
-                  <td style={{ ...styles.td, fontSize: '12px', color: '#888' }}>
-                    {new Date(r.createdAt).toLocaleString()}
-                  </td>
+          <div className="table-scroll">
+            <table style={{ ...styles.table, minWidth: '700px' }}>
+              <thead>
+                <tr>
+                  <th style={styles.th}>Order</th>
+                  <th style={styles.th}>Product</th>
+                  <th style={styles.th}>Produced</th>
+                  <th style={styles.th}>Rejected</th>
+                  <th style={styles.th}>By</th>
+                  <th style={styles.th}>When</th>
                 </tr>
-              ))}
-              {records.length === 0 && (
-                <tr><td colSpan="6" style={styles.emptyState}>No entries logged yet</td></tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {records.map((r) => (
+                  <tr key={r._id}>
+                    <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{r.order?.orderNumber}</td>
+                    <td style={styles.td}>{r.order?.product?.name}</td>
+                    <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{r.quantityProduced}</td>
+                    <td style={{ ...styles.td, fontFamily: 'var(--font-mono)', color: r.rejectedQuantity > 0 ? 'var(--color-down)' : 'inherit' }}>
+                      {r.rejectedQuantity}
+                    </td>
+                    <td style={styles.td}>{r.recordedBy?.name}</td>
+                    <td style={{ ...styles.td, fontSize: '12px', color: '#888' }}>
+                      {new Date(r.createdAt).toLocaleString()}
+                    </td>
+                  </tr>
+                ))}
+                {records.length === 0 && (
+                  <tr><td colSpan="6" style={styles.emptyState}>No entries logged yet</td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </Layout>

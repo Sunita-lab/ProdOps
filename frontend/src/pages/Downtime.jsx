@@ -52,7 +52,7 @@ function Downtime() {
 
   return (
     <Layout>
-      <div style={styles.container}>
+      <div style={styles.container} className="page-container">
         <div style={styles.headerRow}>
           <h2 style={styles.heading}>Downtime</h2>
           <p style={styles.subheading}>Log and resolve machine downtime</p>
@@ -85,41 +85,43 @@ function Downtime() {
         {error && <p style={{ color: 'var(--color-down)', fontSize: '13px', marginBottom: '12px' }}>{error}</p>}
 
         <div style={styles.card}>
-          <table style={styles.table}>
-            <thead>
-              <tr>
-                <th style={styles.th}>Machine</th>
-                <th style={styles.th}>Category</th>
-                <th style={styles.th}>Reason</th>
-                <th style={styles.th}>Started</th>
-                <th style={styles.th}>Ended</th>
-                <th style={styles.th}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {downtimes.map((d) => (
-                <tr key={d._id}>
-                  <td style={styles.td}>{d.machine?.name}</td>
-                  <td style={styles.td}>{d.category}</td>
-                  <td style={styles.td}>{d.reason}</td>
-                  <td style={{ ...styles.td, fontSize: '12px', color: '#888' }}>
-                    {new Date(d.startTime).toLocaleString()}
-                  </td>
-                  <td style={{ ...styles.td, fontSize: '12px', color: '#888' }}>
-                    {d.endTime ? new Date(d.endTime).toLocaleString() : '—'}
-                  </td>
-                  <td style={styles.td}>
-                    {!d.endTime && (
-                      <button onClick={() => handleResolve(d._id)} style={styles.resolveBtn}>Resolve</button>
-                    )}
-                  </td>
+          <div className="table-scroll">
+            <table style={{ ...styles.table, minWidth: '700px' }}>
+              <thead>
+                <tr>
+                  <th style={styles.th}>Machine</th>
+                  <th style={styles.th}>Category</th>
+                  <th style={styles.th}>Reason</th>
+                  <th style={styles.th}>Started</th>
+                  <th style={styles.th}>Ended</th>
+                  <th style={styles.th}></th>
                 </tr>
-              ))}
-              {downtimes.length === 0 && (
-                <tr><td colSpan="6" style={styles.emptyState}>No downtime logged yet</td></tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {downtimes.map((d) => (
+                  <tr key={d._id}>
+                    <td style={styles.td}>{d.machine?.name}</td>
+                    <td style={styles.td}>{d.category}</td>
+                    <td style={styles.td}>{d.reason}</td>
+                    <td style={{ ...styles.td, fontSize: '12px', color: '#888' }}>
+                      {new Date(d.startTime).toLocaleString()}
+                    </td>
+                    <td style={{ ...styles.td, fontSize: '12px', color: '#888' }}>
+                      {d.endTime ? new Date(d.endTime).toLocaleString() : '—'}
+                    </td>
+                    <td style={styles.td}>
+                      {!d.endTime && (
+                        <button onClick={() => handleResolve(d._id)} style={styles.resolveBtn}>Resolve</button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+                {downtimes.length === 0 && (
+                  <tr><td colSpan="6" style={styles.emptyState}>No downtime logged yet</td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </Layout>

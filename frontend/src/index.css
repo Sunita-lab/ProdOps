@@ -46,6 +46,7 @@ body {
 /* Responsive: tables scroll horizontally instead of squeezing */
 .table-scroll {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Responsive: page container padding shrinks on small screens */

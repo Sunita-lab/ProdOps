@@ -53,7 +53,7 @@ function Machines() {
 
   return (
     <Layout>
-      <div style={styles.container}>
+      <div style={styles.container} className="page-container">
         <div style={styles.headerRow}>
           <h2 style={styles.heading}>Machines</h2>
           <p style={styles.subheading}>{machines.length} machines registered</p>
@@ -76,37 +76,39 @@ function Machines() {
         {error && <p style={{ color: 'var(--color-down)', fontSize: '13px', marginBottom: '12px' }}>{error}</p>}
 
         <div style={styles.card}>
-          <table style={styles.table}>
-            <thead>
-              <tr>
-                <th style={styles.th}>Name</th>
-                <th style={styles.th}>Code</th>
-                <th style={styles.th}>Line</th>
-                <th style={styles.th}>Status</th>
-                <th style={styles.th}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {machines.map((m) => (
-                <tr key={m._id}>
-                  <td style={styles.td}>{m.name}</td>
-                  <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{m.code}</td>
-                  <td style={styles.td}>{m.line}</td>
-                  <td style={styles.td}>
-                    <span style={{ color: statusColor(m.status), fontWeight: 500, fontSize: '13px' }}>
-                      ● {m.status}
-                    </span>
-                  </td>
-                  <td style={styles.td}>
-                    <button onClick={() => handleDelete(m._id)} style={styles.deleteBtn}>Delete</button>
-                  </td>
+          <div className="table-scroll">
+            <table style={{ ...styles.table, minWidth: '600px' }}>
+              <thead>
+                <tr>
+                  <th style={styles.th}>Name</th>
+                  <th style={styles.th}>Code</th>
+                  <th style={styles.th}>Line</th>
+                  <th style={styles.th}>Status</th>
+                  <th style={styles.th}></th>
                 </tr>
-              ))}
-              {machines.length === 0 && (
-                <tr><td colSpan="5" style={styles.emptyState}>No machines yet — add your first one above</td></tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {machines.map((m) => (
+                  <tr key={m._id}>
+                    <td style={styles.td}>{m.name}</td>
+                    <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{m.code}</td>
+                    <td style={styles.td}>{m.line}</td>
+                    <td style={styles.td}>
+                      <span style={{ color: statusColor(m.status), fontWeight: 500, fontSize: '13px' }}>
+                        ● {m.status}
+                      </span>
+                    </td>
+                    <td style={styles.td}>
+                      <button onClick={() => handleDelete(m._id)} style={styles.deleteBtn}>Delete</button>
+                    </td>
+                  </tr>
+                ))}
+                {machines.length === 0 && (
+                  <tr><td colSpan="5" style={styles.emptyState}>No machines yet — add your first one above</td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </Layout>

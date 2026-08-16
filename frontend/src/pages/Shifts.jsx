@@ -47,7 +47,7 @@ function Shifts() {
 
   return (
     <Layout>
-      <div style={styles.container}>
+      <div style={styles.container} className="page-container">
         <div style={styles.headerRow}>
           <h2 style={styles.heading}>Shifts</h2>
           <p style={styles.subheading}>{shifts.length} shifts registered</p>
@@ -65,31 +65,33 @@ function Shifts() {
         {error && <p style={{ color: 'var(--color-down)', fontSize: '13px', marginBottom: '12px' }}>{error}</p>}
 
         <div style={styles.card}>
-          <table style={styles.table}>
-            <thead>
-              <tr>
-                <th style={styles.th}>Name</th>
-                <th style={styles.th}>Start</th>
-                <th style={styles.th}>End</th>
-                <th style={styles.th}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {shifts.map((s) => (
-                <tr key={s._id}>
-                  <td style={styles.td}>{s.name}</td>
-                  <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{s.startTime}</td>
-                  <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{s.endTime}</td>
-                  <td style={styles.td}>
-                    <button onClick={() => handleDelete(s._id)} style={styles.deleteBtn}>Delete</button>
-                  </td>
+          <div className="table-scroll">
+            <table style={{ ...styles.table, minWidth: '480px' }}>
+              <thead>
+                <tr>
+                  <th style={styles.th}>Name</th>
+                  <th style={styles.th}>Start</th>
+                  <th style={styles.th}>End</th>
+                  <th style={styles.th}></th>
                 </tr>
-              ))}
-              {shifts.length === 0 && (
-                <tr><td colSpan="4" style={styles.emptyState}>No shifts yet — add your first one above</td></tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {shifts.map((s) => (
+                  <tr key={s._id}>
+                    <td style={styles.td}>{s.name}</td>
+                    <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{s.startTime}</td>
+                    <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{s.endTime}</td>
+                    <td style={styles.td}>
+                      <button onClick={() => handleDelete(s._id)} style={styles.deleteBtn}>Delete</button>
+                    </td>
+                  </tr>
+                ))}
+                {shifts.length === 0 && (
+                  <tr><td colSpan="4" style={styles.emptyState}>No shifts yet — add your first one above</td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </Layout>

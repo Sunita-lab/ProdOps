@@ -66,7 +66,7 @@ function ProductionOrders() {
 
   return (
     <Layout>
-      <div style={styles.container}>
+      <div style={styles.container} className="page-container">
         <div style={styles.headerRow}>
           <h2 style={styles.heading}>Production Orders</h2>
           <p style={styles.subheading}>{orders.length} orders</p>
@@ -106,43 +106,45 @@ function ProductionOrders() {
         {error && <p style={{ color: 'var(--color-down)', fontSize: '13px', marginBottom: '12px' }}>{error}</p>}
 
         <div style={styles.card}>
-          <table style={styles.table}>
-            <thead>
-              <tr>
-                <th style={styles.th}>Order #</th>
-                <th style={styles.th}>Product</th>
-                <th style={styles.th}>Machine</th>
-                <th style={styles.th}>Shift</th>
-                <th style={styles.th}>Target</th>
-                <th style={styles.th}>Produced</th>
-                <th style={styles.th}>Status</th>
-                <th style={styles.th}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((o) => (
-                <tr key={o._id}>
-                  <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{o.orderNumber}</td>
-                  <td style={styles.td}>{o.product?.name}</td>
-                  <td style={styles.td}>{o.machine?.name}</td>
-                  <td style={styles.td}>{o.shift?.name}</td>
-                  <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{o.targetQuantity}</td>
-                  <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{o.producedQuantity}</td>
-                  <td style={styles.td}>
-                    <span style={{ color: statusColor(o.status), fontWeight: 500, fontSize: '13px' }}>
-                      ● {o.status}
-                    </span>
-                  </td>
-                  <td style={styles.td}>
-                    <button onClick={() => handleDelete(o._id)} style={styles.deleteBtn}>Delete</button>
-                  </td>
+          <div className="table-scroll">
+            <table style={{ ...styles.table, minWidth: '820px' }}>
+              <thead>
+                <tr>
+                  <th style={styles.th}>Order #</th>
+                  <th style={styles.th}>Product</th>
+                  <th style={styles.th}>Machine</th>
+                  <th style={styles.th}>Shift</th>
+                  <th style={styles.th}>Target</th>
+                  <th style={styles.th}>Produced</th>
+                  <th style={styles.th}>Status</th>
+                  <th style={styles.th}></th>
                 </tr>
-              ))}
-              {orders.length === 0 && (
-                <tr><td colSpan="8" style={styles.emptyState}>No orders yet — create your first one above</td></tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {orders.map((o) => (
+                  <tr key={o._id}>
+                    <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{o.orderNumber}</td>
+                    <td style={styles.td}>{o.product?.name}</td>
+                    <td style={styles.td}>{o.machine?.name}</td>
+                    <td style={styles.td}>{o.shift?.name}</td>
+                    <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{o.targetQuantity}</td>
+                    <td style={{ ...styles.td, fontFamily: 'var(--font-mono)' }}>{o.producedQuantity}</td>
+                    <td style={styles.td}>
+                      <span style={{ color: statusColor(o.status), fontWeight: 500, fontSize: '13px' }}>
+                        ● {o.status}
+                      </span>
+                    </td>
+                    <td style={styles.td}>
+                      <button onClick={() => handleDelete(o._id)} style={styles.deleteBtn}>Delete</button>
+                    </td>
+                  </tr>
+                ))}
+                {orders.length === 0 && (
+                  <tr><td colSpan="8" style={styles.emptyState}>No orders yet — create your first one above</td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </Layout>
