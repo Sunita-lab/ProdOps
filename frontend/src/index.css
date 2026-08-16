@@ -70,3 +70,19 @@ body {
 .table-scroll {
   overflow-x: auto;
 }
+
+/* Responsive: page container padding shrinks on small screens */
+@media (max-width: 600px) {
+  .page-container {
+    padding: 20px 16px !important;
+  }
+}
+
+.app-footer {
+  text-align: center;
+  padding: 20px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: #999;
+  border-top: 1px solid var(--color-border);
+}
