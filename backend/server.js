@@ -33,6 +33,18 @@ app.use('/api/quality', qualityInspectionRoutes);
 const dashboardRoutes = require('./routes/dashboardRoutes');
 app.use('/api/dashboard', dashboardRoutes);
 
+const machineRoutes = require('./routes/machineRoutes');
+app.use('/api/machines', machineRoutes);
+
+const lineRoutes = require('./routes/lineRoutes');
+app.use('/api/lines', lineRoutes);
+
+const shiftRoutes = require('./routes/shiftRoutes');
+app.use('/api/shifts', shiftRoutes);
+
+const productionRecordRoutes = require('./routes/productionRecordRoutes');
+app.use('/api/records', productionRecordRoutes);
+
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected successfully'))
