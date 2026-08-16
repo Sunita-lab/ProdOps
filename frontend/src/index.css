@@ -29,7 +29,12 @@ body {
 }
 
 /* Responsive: grids collapse on small screens */
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
+  .grid-4 {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+@media (max-width: 820px) {
   .grid-4 {
     grid-template-columns: repeat(2, 1fr) !important;
   }
