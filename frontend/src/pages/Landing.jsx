@@ -89,7 +89,7 @@ function Landing() {
           <div style={styles.eyebrow}>WHAT YOU GET</div>
           <h2 style={styles.sectionTitle}>Everything the floor needs, nothing it doesn't</h2>
         </div>
-        <div style={styles.features}>
+        <div style={styles.features} className="grid-4">
           {features.map((f) => (
             <div key={f.title} style={styles.featureCard}>
               <div style={styles.featureNum}>{f.n}</div>
@@ -105,7 +105,7 @@ function Landing() {
           <div style={styles.eyebrow}>HOW IT WORKS</div>
           <h2 style={styles.sectionTitle}>From setup to shift-end, in three steps</h2>
         </div>
-        <div style={styles.stepsRow}>
+        <div style={styles.stepsRow} className="grid-3">
           {steps.map((s, i) => (
             <div key={s.n} style={styles.stepItem}>
               <div style={styles.stepNumCircle}>{s.n}</div>
