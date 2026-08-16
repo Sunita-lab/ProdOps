@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 function Layout({ children }) {
   const location = useLocation();
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user'));
+  const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
     { path: '/dashboard', label: 'Dashboard' },
@@ -22,9 +24,22 @@ function Layout({ children }) {
     navigate('/login');
   };
 
+  const handleNavClick = () => {
+    setIsOpen(false);
+  };
+
   return (
     <div style={styles.wrapper} className="app-shell">
-      <aside style={styles.sidebar} className="app-sidebar">
+      <button className="hamburger-btn" onClick={() => setIsOpen(true)}>
+        <span style={styles.hamburgerIcon}>☰</span>
+      </button>
+
+      <div
+        className={`sidebar-overlay ${isOpen ? 'show' : ''}`}
+        onClick={() => setIsOpen(false)}
+      />
+
+      <aside style={styles.sidebar} className={`app-sidebar ${isOpen ? 'open' : ''}`}>
         <div style={styles.logo}>ProdOps</div>
         <nav style={styles.nav} className="app-sidebar-nav">
           {navItems.map((item) => {
@@ -33,6 +48,7 @@ function Layout({ children }) {
               <Link
                 key={item.path}
                 to={item.path}
+                onClick={handleNavClick}
                 style={{
                   ...styles.navLink,
                   background: isActive ? 'rgba(11, 95, 165, 0.15)' : 'transparent',
@@ -59,6 +75,7 @@ function Layout({ children }) {
 
 const styles = {
   wrapper: { display: 'flex', minHeight: '100vh' },
+  hamburgerIcon: { color: 'white', fontSize: '18px' },
   sidebar: {
     width: '220px',
     background: 'var(--color-chrome)',
