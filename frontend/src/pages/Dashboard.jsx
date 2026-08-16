@@ -34,7 +34,7 @@ function Dashboard() {
   if (!summary) {
     return (
       <Layout>
-        <div style={styles.container}>
+        <div style={styles.container} className="page-container">
           {error ? <p style={{ color: 'var(--color-down)' }}>{error}</p> : <p style={styles.loading}>Loading dashboard...</p>}
         </div>
       </Layout>
@@ -50,60 +50,67 @@ function Dashboard() {
 
   return (
     <Layout>
-      <div style={styles.container}>
-        <div style={styles.headerRow}>
-          <h2 style={styles.heading}>Welcome, {user?.name}</h2>
-          <p style={styles.subheading}>Here's what's happening on the floor today</p>
-        </div>
-
-        <div style={styles.cardGrid}>
-          {cards.map((c) => (
-            <div key={c.label} style={styles.statCard}>
-              <div style={{
-                ...styles.statValue,
-                color: c.warn ? 'var(--color-down)' : c.highlight ? 'var(--color-primary)' : 'var(--color-text)'
-              }}>
-                {c.value}
-              </div>
-              <div style={styles.statLabel}>{c.label}</div>
-              <div style={styles.statUnit}>{c.unit}</div>
-            </div>
-          ))}
-        </div>
-
-        {summary.activeDowntimes > 0 && (
-          <div style={styles.alertBanner}>
-            ⚠ {summary.activeDowntimes} machine{summary.activeDowntimes > 1 ? 's are' : ' is'} currently down — check the Downtime page
+      <div style={styles.pageWrapper}>
+        <div style={styles.container} className="page-container">
+          <div style={styles.headerRow}>
+            <h2 style={styles.heading}>Welcome, {user?.name}</h2>
+            <p style={styles.subheading}>Here's what's happening on the floor today</p>
           </div>
-        )}
 
-        <div style={styles.card}>
-          <h3 style={styles.sectionHeading}>Machine Status</h3>
-          {machines.length === 0 ? (
-            <p style={styles.emptyState}>No machines registered yet</p>
-          ) : (
-            <div style={styles.machineGrid}>
-              {machines.map((m) => (
-                <div key={m._id} style={styles.machineRow}>
-                  <div>
-                    <div style={styles.machineName}>{m.name}</div>
-                    <div style={styles.machineCode}>{m.code} · {m.line}</div>
-                  </div>
-                  <span style={{ color: statusColor(m.status), fontWeight: 500, fontSize: '13px' }}>
-                    ● {m.status}
-                  </span>
+          <div style={styles.cardGrid} className="grid-4">
+            {cards.map((c) => (
+              <div key={c.label} style={styles.statCard}>
+                <div style={{
+                  ...styles.statValue,
+                  color: c.warn ? 'var(--color-down)' : c.highlight ? 'var(--color-primary)' : 'var(--color-text)'
+                }}>
+                  {c.value}
                 </div>
-              ))}
+                <div style={styles.statLabel}>{c.label}</div>
+                <div style={styles.statUnit}>{c.unit}</div>
+              </div>
+            ))}
+          </div>
+
+          {summary.activeDowntimes > 0 && (
+            <div style={styles.alertBanner}>
+              ⚠ {summary.activeDowntimes} machine{summary.activeDowntimes > 1 ? 's are' : ' is'} currently down — check the Downtime page
             </div>
           )}
+
+          <div style={styles.card}>
+            <h3 style={styles.sectionHeading}>Machine Status</h3>
+            {machines.length === 0 ? (
+              <p style={styles.emptyState}>No machines registered yet</p>
+            ) : (
+              <div style={styles.machineGrid}>
+                {machines.map((m) => (
+                  <div key={m._id} style={styles.machineRow}>
+                    <div>
+                      <div style={styles.machineName}>{m.name}</div>
+                      <div style={styles.machineCode}>{m.code} · {m.line}</div>
+                    </div>
+                    <span style={{ color: statusColor(m.status), fontWeight: 500, fontSize: '13px' }}>
+                      ● {m.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
+
+        <footer className="app-footer">
+          <span>ProdOps — Industrial Production Monitoring</span>
+        </footer>
       </div>
     </Layout>
   );
 }
 
 const styles = {
-  container: { padding: '32px 40px', maxWidth: '1000px' },
+  pageWrapper: { display: 'flex', flexDirection: 'column', minHeight: '100%' },
+  container: { padding: '32px 40px', maxWidth: '1000px', flex: 1 },
   loading: { fontSize: '14px', color: '#888' },
   headerRow: { marginBottom: '24px' },
   heading: { fontFamily: 'var(--font-heading)', fontSize: '22px', fontWeight: 500, marginBottom: '4px' },
