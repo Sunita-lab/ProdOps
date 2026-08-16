@@ -23,10 +23,10 @@ function Layout({ children }) {
   };
 
   return (
-    <div style={styles.wrapper}>
-      <aside style={styles.sidebar}>
+    <div style={styles.wrapper} className="app-shell">
+      <aside style={styles.sidebar} className="app-sidebar">
         <div style={styles.logo}>ProdOps</div>
-        <nav style={styles.nav}>
+        <nav style={styles.nav} className="app-sidebar-nav">
           {navItems.map((item) => {
             const isActive = location.pathname === item.path;
             return (
@@ -37,7 +37,8 @@ function Layout({ children }) {
                   ...styles.navLink,
                   background: isActive ? 'rgba(11, 95, 165, 0.15)' : 'transparent',
                   color: isActive ? '#7EC1F5' : 'var(--color-text-light)',
-                  borderLeft: isActive ? '3px solid var(--color-primary)' : '3px solid transparent'
+                  borderLeft: isActive ? '3px solid var(--color-primary)' : '3px solid transparent',
+                  whiteSpace: 'nowrap'
                 }}
               >
                 {item.label}
@@ -45,7 +46,7 @@ function Layout({ children }) {
             );
           })}
         </nav>
-        <div style={styles.sidebarFooter}>
+        <div style={styles.sidebarFooter} className="app-sidebar-footer">
           <div style={styles.userName}>{user?.name}</div>
           <div style={styles.userRole}>{user?.role}</div>
           <button onClick={handleLogout} style={styles.logoutBtn}>Logout</button>
